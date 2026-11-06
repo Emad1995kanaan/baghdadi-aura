@@ -70,7 +70,11 @@ fun AuraHome(nav: Navigator, x: Xtream, now: Long) {
                 Modifier.width(260.dp).fillMaxHeight().background(Color(0xFF0B0B0D))
                     .verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(vertical = 22.dp),
             ) {
-                Box(Modifier.fillMaxWidth().height(120.dp), contentAlignment = Alignment.Center) { Logo(112.dp) }
+                Box(Modifier.fillMaxWidth().height(130.dp), contentAlignment = Alignment.Center) {
+                    // Logo Baghdadi en largeur : on enlève les marges vides du carré pour qu'il remplisse le menu.
+                    androidx.compose.foundation.Image(androidx.compose.ui.res.painterResource(com.kanaani.ibo.R.drawable.brand_mark), null,
+                        Modifier.width(230.dp).height(115.dp), contentScale = androidx.compose.ui.layout.ContentScale.Crop)
+                }
                 Spacer(Modifier.height(18.dp))
                 MenuItem(Str.live, Icons.Live, Modifier.focusRequester(first)) { nav.go(Screen.Live()) }
                 MenuItem(Str.movies, Icons.Movies) { nav.go(Screen.Catalog(series = false)) }
