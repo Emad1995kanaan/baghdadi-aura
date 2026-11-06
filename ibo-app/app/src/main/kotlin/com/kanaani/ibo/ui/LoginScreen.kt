@@ -89,12 +89,12 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = if (keyboard) Arrangement.Top else Arrangement.Center,
         ) {
-            if (!keyboard) {
-                // Logo Baghdadi (large) : le dessin est en largeur, on enlève les marges vides du carré.
-                androidx.compose.foundation.Image(androidx.compose.ui.res.painterResource(com.kanaani.ibo.R.drawable.brand_mark), null,
-                    Modifier.width(480.dp).height(240.dp), contentScale = androidx.compose.ui.layout.ContentScale.Crop)
-                Spacer(Modifier.height(10.dp))
-            }
+            // Écran large (TV, box, tablette couchée) : logo et formulaire côte à côte → le logo n'est jamais coupé.
+            val cfg = androidx.compose.ui.platform.LocalConfiguration.current
+            val wide = cfg.screenWidthDp > cfg.screenHeightDp
+            if (!keyboard && !wide) { LoginLogo(false); Spacer(Modifier.height(12.dp)) }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+            if (!keyboard && wide) { LoginLogo(true); Spacer(Modifier.width(56.dp)) }
             Column(
                 Modifier.width(if (keyboard) 560.dp else 400.dp).clip(RoundedCornerShape(14.dp)).background(Color(0xFF111113))
                     .border(1.dp, Color(0x22FFFFFF), RoundedCornerShape(14.dp)).padding(if (keyboard) 14.dp else 24.dp),
@@ -132,8 +132,16 @@ fun LoginScreen() {
                 }
                 Label("v${BuildConfig.VERSION_NAME}", 11.sp, C.text3)
             }
+            }
         }
     }
+}
+
+/** Logo Baghdadi (dessin en largeur, marges du carré enlevées) : grand à côté du formulaire (TV), plus petit au-dessus (téléphone). */
+@Composable
+private fun LoginLogo(wide: Boolean) {
+    androidx.compose.foundation.Image(androidx.compose.ui.res.painterResource(com.kanaani.ibo.R.drawable.brand_mark), null,
+        Modifier.width(if (wide) 440.dp else 320.dp).height(if (wide) 220.dp else 160.dp), contentScale = androidx.compose.ui.layout.ContentScale.Crop)
 }
 
 /** Texte d'un refus d'essai (fin, plein, autre appareil…) avec le numéro WhatsApp. */
