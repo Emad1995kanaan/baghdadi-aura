@@ -64,10 +64,13 @@ fun AuraHome(nav: Navigator, x: Xtream, now: Long) {
     var askRefresh by remember { mutableStateOf(false) }
     LaunchedEffect(toast) { if (toast != null) { kotlinx.coroutines.delay(2000); toast = null } }
     Backdrop {
+        // Baghdadi Aura : fond de l'accueil (noir, vagues rouges et argent).
+        androidx.compose.foundation.Image(androidx.compose.ui.res.painterResource(com.kanaani.ibo.R.drawable.home_bg), null,
+            Modifier.fillMaxSize(), contentScale = androidx.compose.ui.layout.ContentScale.Crop)
         Row(Modifier.fillMaxSize()) {
             // ── Menu (à plat, comme une liste) ──
             Column(
-                Modifier.width(260.dp).fillMaxHeight().background(Color(0xFF0B0B0D))
+                Modifier.width(260.dp).fillMaxHeight().background(Color(0xCC0B0B0D))
                     .verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(vertical = 22.dp),
             ) {
                 Box(Modifier.fillMaxWidth().height(130.dp), contentAlignment = Alignment.Center) {
